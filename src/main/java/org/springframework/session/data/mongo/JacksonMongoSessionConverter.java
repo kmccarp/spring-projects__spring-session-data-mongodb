@@ -160,6 +160,8 @@ public class JacksonMongoSessionConverter extends AbstractMongoSessionConverter 
 
 	private static class MongoIdNamingStrategy extends PropertyNamingStrategy.PropertyNamingStrategyBase {
 
+		private static final long serialVersionUID = 1;
+
 		@Override
 		public String translate(String propertyName) {
 
