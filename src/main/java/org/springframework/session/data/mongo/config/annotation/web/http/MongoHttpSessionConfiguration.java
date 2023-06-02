@@ -50,8 +50,7 @@ import org.springframework.util.StringValueResolver;
  * @since 1.2
  */
 @Configuration(proxyBeanMethods = false)
-public class MongoHttpSessionConfiguration extends SpringHttpSessionConfiguration
-		implements BeanClassLoaderAware, EmbeddedValueResolverAware, ImportAware {
+public class MongoHttpSessionConfiguration extends SpringHttpSessionConfigurationimplements BeanClassLoaderAware, EmbeddedValueResolverAware, ImportAware {
 
 	private AbstractMongoSessionConverter mongoSessionConverter;
 	private Integer maxInactiveIntervalInSeconds;
@@ -75,8 +74,8 @@ public class MongoHttpSessionConfiguration extends SpringHttpSessionConfiguratio
 			}
 		} else {
 			JdkMongoSessionConverter mongoSessionConverter = new JdkMongoSessionConverter(new SerializingConverter(),
-					new DeserializingConverter(this.classLoader),
-					Duration.ofSeconds(MongoIndexedSessionRepository.DEFAULT_INACTIVE_INTERVAL));
+		new DeserializingConverter(this.classLoader),
+		Duration.ofSeconds(MongoIndexedSessionRepository.DEFAULT_INACTIVE_INTERVAL));
 
 			if (this.indexResolver != null) {
 				mongoSessionConverter.setIndexResolver(this.indexResolver);
@@ -90,7 +89,7 @@ public class MongoHttpSessionConfiguration extends SpringHttpSessionConfiguratio
 		}
 
 		this.sessionRepositoryCustomizers
-				.forEach(sessionRepositoryCustomizer -> sessionRepositoryCustomizer.customize(repository));
+	.forEach(sessionRepositoryCustomizer -> sessionRepositoryCustomizer.customize(repository));
 
 		return repository;
 	}
@@ -106,7 +105,7 @@ public class MongoHttpSessionConfiguration extends SpringHttpSessionConfiguratio
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 
 		AnnotationAttributes attributes = AnnotationAttributes
-				.fromMap(importMetadata.getAnnotationAttributes(EnableMongoHttpSession.class.getName()));
+	.fromMap(importMetadata.getAnnotationAttributes(EnableMongoHttpSession.class.getName()));
 
 		if (attributes != null) {
 			this.maxInactiveIntervalInSeconds = attributes.getNumber("maxInactiveIntervalInSeconds");
@@ -127,7 +126,7 @@ public class MongoHttpSessionConfiguration extends SpringHttpSessionConfiguratio
 
 	@Autowired(required = false)
 	public void setSessionRepositoryCustomizers(
-			ObjectProvider<SessionRepositoryCustomizer<MongoIndexedSessionRepository>> sessionRepositoryCustomizers) {
+ObjectProvider<SessionRepositoryCustomizer<MongoIndexedSessionRepository>> sessionRepositoryCustomizers) {
 		this.sessionRepositoryCustomizers = sessionRepositoryCustomizers.orderedStream().collect(Collectors.toList());
 	}
 

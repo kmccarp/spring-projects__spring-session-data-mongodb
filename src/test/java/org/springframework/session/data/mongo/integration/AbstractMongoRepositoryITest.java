@@ -57,7 +57,8 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 
 	protected static final String INDEX_NAME = FindByIndexNameSessionRepository.PRINCIPAL_NAME_INDEX_NAME;
 
-	@Autowired protected MongoIndexedSessionRepository repository;
+	@Autowired
+	protected MongoIndexedSessionRepository repository;
 
 	@Test
 	public void saves() {
@@ -69,7 +70,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		String expectedAttributeValue = "b";
 		toSave.setAttribute(expectedAttributeName, expectedAttributeValue);
 		Authentication toSaveToken = new UsernamePasswordAuthenticationToken(username, "password",
-				AuthorityUtils.createAuthorityList("ROLE_USER"));
+	AuthorityUtils.createAuthorityList("ROLE_USER"));
 		SecurityContext toSaveContext = SecurityContextHolder.createEmptyContext();
 		toSaveContext.setAuthentication(toSaveToken);
 		toSave.setAttribute(SPRING_SECURITY_CONTEXT, toSaveContext);
@@ -81,8 +82,8 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 
 		assertThat(session.getId()).isEqualTo(toSave.getId());
 		assertThat(session.getAttributeNames()).isEqualTo(toSave.getAttributeNames());
-		assertThat(session.<String> getAttribute(expectedAttributeName))
-				.isEqualTo(toSave.getAttribute(expectedAttributeName));
+		assertThat(session.<String>getAttribute(expectedAttributeName))
+	.isEqualTo(toSave.getAttribute(expectedAttributeName));
 
 		this.repository.deleteById(toSave.getId());
 
@@ -106,8 +107,8 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 
 		Session session = this.repository.findById(toSave.getId());
 		assertThat(session.getAttributeNames().size()).isEqualTo(2);
-		assertThat(session.<String> getAttribute("a")).isEqualTo("b");
-		assertThat(session.<String> getAttribute("1")).isEqualTo("2");
+		assertThat(session.<String>getAttribute("a")).isEqualTo("b");
+		assertThat(session.<String>getAttribute("1")).isEqualTo("2");
 
 		this.repository.deleteById(toSave.getId());
 	}
@@ -122,7 +123,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());
@@ -153,7 +154,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());
@@ -174,7 +175,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());
@@ -193,7 +194,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 
 		assertThat(findByPrincipalName).isEmpty();
 	}
@@ -212,7 +213,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 		assertThat(findByPrincipalName).isEmpty();
 
 		findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME, principalNameChanged);
@@ -235,7 +236,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(getSession);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 
 		assertThat(findByPrincipalName).isEmpty();
 	}
@@ -256,7 +257,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(getSession);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				principalName);
+	principalName);
 		assertThat(findByPrincipalName).isEmpty();
 
 		findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME, principalNameChanged);
@@ -274,7 +275,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());
@@ -299,7 +300,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());
@@ -317,7 +318,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 
 		assertThat(findByPrincipalName).isEmpty();
 	}
@@ -334,7 +335,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 		assertThat(findByPrincipalName).isEmpty();
 
 		findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME, getChangedSecurityName());
@@ -357,7 +358,7 @@ abstract public class AbstractMongoRepositoryITest extends AbstractITest {
 		this.repository.save(getSession);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 		assertThat(findByPrincipalName).isEmpty();
 
 		findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME, getChangedSecurityName());

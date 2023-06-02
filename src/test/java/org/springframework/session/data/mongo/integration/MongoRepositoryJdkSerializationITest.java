@@ -53,7 +53,7 @@ public class MongoRepositoryJdkSerializationITest extends AbstractMongoRepositor
 		this.repository.save(getSession);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getChangedSecurityName());
+	getChangedSecurityName());
 
 		assertThat(findByPrincipalName).isEmpty();
 	}
@@ -72,7 +72,7 @@ public class MongoRepositoryJdkSerializationITest extends AbstractMongoRepositor
 		this.repository.save(toSave);
 
 		Map<String, MongoSession> findByPrincipalName = this.repository.findByIndexNameAndIndexValue(INDEX_NAME,
-				getSecurityName());
+	getSecurityName());
 
 		assertThat(findByPrincipalName).hasSize(1);
 		assertThat(findByPrincipalName.keySet()).containsOnly(toSave.getId());

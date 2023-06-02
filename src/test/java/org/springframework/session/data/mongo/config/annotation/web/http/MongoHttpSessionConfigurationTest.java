@@ -110,7 +110,7 @@ public class MongoHttpSessionConfigurationTest {
 
 		assertThat(repository).isNotNull();
 		assertThat(ReflectionTestUtils.getField(repository, "maxInactiveIntervalInSeconds"))
-				.isEqualTo(MAX_INACTIVE_INTERVAL_IN_SECONDS);
+	.isEqualTo(MAX_INACTIVE_INTERVAL_IN_SECONDS);
 	}
 
 	@Test
@@ -122,7 +122,7 @@ public class MongoHttpSessionConfigurationTest {
 
 		assertThat(repository).isNotNull();
 		assertThat(ReflectionTestUtils.getField(repository, "maxInactiveIntervalInSeconds"))
-				.isEqualTo(MAX_INACTIVE_INTERVAL_IN_SECONDS);
+	.isEqualTo(MAX_INACTIVE_INTERVAL_IN_SECONDS);
 	}
 
 	@Test
@@ -166,7 +166,7 @@ public class MongoHttpSessionConfigurationTest {
 
 		MongoIndexedSessionRepository repository = this.context.getBean(MongoIndexedSessionRepository.class);
 		IndexResolver<MongoSession> indexResolver = this.context.getBean(IndexResolver.class);
-		
+
 		assertThat(repository).isNotNull();
 		assertThat(indexResolver).isNotNull();
 		assertThat(repository).extracting("mongoSessionConverter").hasFieldOrPropertyWithValue("indexResolver", indexResolver);

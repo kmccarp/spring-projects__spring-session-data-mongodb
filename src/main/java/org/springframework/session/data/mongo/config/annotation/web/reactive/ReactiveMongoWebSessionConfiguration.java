@@ -49,8 +49,7 @@ import org.springframework.util.StringValueResolver;
  * @author Vedran Pavić
  */
 @Configuration(proxyBeanMethods = false)
-public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfiguration
-		implements BeanClassLoaderAware, EmbeddedValueResolverAware, ImportAware {
+public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfigurationimplements BeanClassLoaderAware, EmbeddedValueResolverAware, ImportAware {
 
 	private AbstractMongoSessionConverter mongoSessionConverter;
 	private Integer maxInactiveIntervalInSeconds;
@@ -58,7 +57,8 @@ public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfig
 	private StringValueResolver embeddedValueResolver;
 	private List<ReactiveSessionRepositoryCustomizer<ReactiveMongoSessionRepository>> sessionRepositoryCustomizers;
 
-	@Autowired(required = false) private MongoOperations mongoOperations;
+	@Autowired(required = false)
+	private MongoOperations mongoOperations;
 	private ClassLoader classLoader;
 	private IndexResolver<MongoSession> indexResolver;
 
@@ -76,8 +76,8 @@ public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfig
 
 		} else {
 			JdkMongoSessionConverter mongoSessionConverter = new JdkMongoSessionConverter(new SerializingConverter(),
-					new DeserializingConverter(this.classLoader),
-					Duration.ofSeconds(ReactiveMongoSessionRepository.DEFAULT_INACTIVE_INTERVAL));
+		new DeserializingConverter(this.classLoader),
+		Duration.ofSeconds(ReactiveMongoSessionRepository.DEFAULT_INACTIVE_INTERVAL));
 
 			if (this.indexResolver != null) {
 				mongoSessionConverter.setIndexResolver(this.indexResolver);
@@ -99,7 +99,7 @@ public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfig
 		}
 
 		this.sessionRepositoryCustomizers
-				.forEach(sessionRepositoryCustomizer -> sessionRepositoryCustomizer.customize(repository));
+	.forEach(sessionRepositoryCustomizer -> sessionRepositoryCustomizer.customize(repository));
 
 		return repository;
 	}
@@ -113,7 +113,7 @@ public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfig
 	public void setImportMetadata(AnnotationMetadata importMetadata) {
 
 		AnnotationAttributes attributes = AnnotationAttributes
-				.fromMap(importMetadata.getAnnotationAttributes(EnableMongoWebSession.class.getName()));
+	.fromMap(importMetadata.getAnnotationAttributes(EnableMongoWebSession.class.getName()));
 
 		if (attributes != null) {
 			this.maxInactiveIntervalInSeconds = attributes.getNumber("maxInactiveIntervalInSeconds");
@@ -156,7 +156,7 @@ public class ReactiveMongoWebSessionConfiguration extends SpringWebSessionConfig
 
 	@Autowired(required = false)
 	public void setSessionRepositoryCustomizers(
-			ObjectProvider<ReactiveSessionRepositoryCustomizer<ReactiveMongoSessionRepository>> sessionRepositoryCustomizers) {
+ObjectProvider<ReactiveSessionRepositoryCustomizer<ReactiveMongoSessionRepository>> sessionRepositoryCustomizers) {
 		this.sessionRepositoryCustomizers = sessionRepositoryCustomizers.orderedStream().collect(Collectors.toList());
 	}
 

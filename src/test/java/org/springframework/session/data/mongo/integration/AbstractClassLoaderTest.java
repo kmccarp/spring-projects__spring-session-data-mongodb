@@ -36,9 +36,11 @@ import org.springframework.util.ReflectionUtils;
  */
 public abstract class AbstractClassLoaderTest<T> extends AbstractITest {
 
-	@Autowired T sessionRepository;
+	@Autowired
+	T sessionRepository;
 
-	@Autowired ApplicationContext applicationContext;
+	@Autowired
+	ApplicationContext applicationContext;
 
 	@Test
 	public void verifyContainerClassLoaderLoadedIntoConverter() {
@@ -46,16 +48,16 @@ public abstract class AbstractClassLoaderTest<T> extends AbstractITest {
 		Field mongoSessionConverterField = ReflectionUtils.findField(sessionRepository.getClass(), "mongoSessionConverter");
 		ReflectionUtils.makeAccessible(Assert.requireNonNull(mongoSessionConverterField, "mongoSessionConverter must not be null!"));
 		AbstractMongoSessionConverter sessionConverter = (AbstractMongoSessionConverter) ReflectionUtils
-				.getField(mongoSessionConverterField, this.sessionRepository);
+	.getField(mongoSessionConverterField, this.sessionRepository);
 
 		assertThat(sessionConverter).isInstanceOf(JdkMongoSessionConverter.class);
 
 		JdkMongoSessionConverter jdkMongoSessionConverter = (JdkMongoSessionConverter) sessionConverter;
 
 		DeserializingConverter deserializingConverter = (DeserializingConverter) extractField(
-				JdkMongoSessionConverter.class, "deserializer", jdkMongoSessionConverter);
+	JdkMongoSessionConverter.class, "deserializer", jdkMongoSessionConverter);
 		DefaultDeserializer deserializer = (DefaultDeserializer) extractField(DeserializingConverter.class, "deserializer",
-				deserializingConverter);
+	deserializingConverter);
 		ClassLoader classLoader = (ClassLoader) extractField(DefaultDeserializer.class, "classLoader", deserializer);
 
 		assertThat(classLoader).isEqualTo(applicationContext.getClassLoader());

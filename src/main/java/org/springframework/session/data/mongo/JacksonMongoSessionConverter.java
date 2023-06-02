@@ -148,7 +148,8 @@ public class JacksonMongoSessionConverter extends AbstractMongoSessionConverter 
 
 		@JsonCreator
 		public MongoSessionMixin(@JsonProperty("_id") String id,
-				@JsonProperty("intervalSeconds") long maxInactiveIntervalInSeconds) {}
+	@JsonProperty("intervalSeconds") long maxInactiveIntervalInSeconds) {
+		}
 	}
 
 	/**

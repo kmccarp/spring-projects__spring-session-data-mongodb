@@ -85,8 +85,8 @@ public class ReactiveMongoWebSessionConfigurationTest {
 		this.context.register(BadConfig.class);
 
 		assertThatExceptionOfType(UnsatisfiedDependencyException.class).isThrownBy(this.context::refresh)
-				.withMessageContaining("Error creating bean with name 'reactiveMongoSessionRepository'")
-				.withMessageContaining("No qualifying bean of type '" + ReactiveMongoOperations.class.getCanonicalName());
+	.withMessageContaining("Error creating bean with name 'reactiveMongoSessionRepository'")
+	.withMessageContaining("No qualifying bean of type '" + ReactiveMongoOperations.class.getCanonicalName());
 	}
 
 	@Test
@@ -127,7 +127,7 @@ public class ReactiveMongoWebSessionConfigurationTest {
 		ReactiveMongoSessionRepository repository = this.context.getBean(ReactiveMongoSessionRepository.class);
 
 		Field inactiveField = ReflectionUtils.findField(ReactiveMongoSessionRepository.class,
-				"maxInactiveIntervalInSeconds");
+	"maxInactiveIntervalInSeconds");
 		ReflectionUtils.makeAccessible(inactiveField);
 		Integer inactiveSeconds = (Integer) inactiveField.get(repository);
 

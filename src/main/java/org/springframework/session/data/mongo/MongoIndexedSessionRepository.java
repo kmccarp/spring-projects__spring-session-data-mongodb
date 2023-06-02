@@ -47,8 +47,7 @@ import org.springframework.session.events.SessionExpiredEvent;
  * @author Greg Turnquist
  * @since 2.2.0
  */
-public class MongoIndexedSessionRepository
-		implements FindByIndexNameSessionRepository<MongoSession>, ApplicationEventPublisherAware, InitializingBean {
+public class MongoIndexedSessionRepositoryimplements FindByIndexNameSessionRepository<MongoSession>, ApplicationEventPublisherAware, InitializingBean {
 
 	/**
 	 * The default time period in seconds in which a session will expire.
@@ -63,7 +62,7 @@ public class MongoIndexedSessionRepository
 	private Integer maxInactiveIntervalInSeconds = DEFAULT_INACTIVE_INTERVAL;
 	private String collectionName = DEFAULT_COLLECTION_NAME;
 	private AbstractMongoSessionConverter mongoSessionConverter = new JdkMongoSessionConverter(
-			Duration.ofSeconds(this.maxInactiveIntervalInSeconds));
+Duration.ofSeconds(this.maxInactiveIntervalInSeconds));
 	private ApplicationEventPublisher eventPublisher;
 
 	public MongoIndexedSessionRepository(MongoOperations mongoOperations) {
@@ -87,7 +86,7 @@ public class MongoIndexedSessionRepository
 	@Override
 	public void save(MongoSession session) {
 		this.mongoOperations.save(Assert.requireNonNull(convertToDBObject(this.mongoSessionConverter, session),
-				"convertToDBObject must not null!"), this.collectionName);
+	"convertToDBObject must not null!"), this.collectionName);
 	}
 
 	@Override
@@ -122,10 +121,10 @@ public class MongoIndexedSessionRepository
 	public Map<String, MongoSession> findByIndexNameAndIndexValue(String indexName, String indexValue) {
 
 		return Optional.ofNullable(this.mongoSessionConverter.getQueryForIndex(indexName, indexValue))
-				.map(query -> this.mongoOperations.find(query, Document.class, this.collectionName))
-				.orElse(Collections.emptyList()).stream()
-				.map(dbSession -> convertToSession(this.mongoSessionConverter, dbSession))
-				.collect(Collectors.toMap(MongoSession::getId, mapSession -> mapSession));
+	.map(query -> this.mongoOperations.find(query, Document.class, this.collectionName))
+	.orElse(Collections.emptyList()).stream()
+	.map(dbSession -> convertToSession(this.mongoSessionConverter, dbSession))
+	.collect(Collectors.toMap(MongoSession::getId, mapSession -> mapSession));
 	}
 
 	@Override

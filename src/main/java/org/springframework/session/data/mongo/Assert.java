@@ -22,7 +22,8 @@ import org.springframework.lang.Nullable;
  */
 public final class Assert {
 
-	private Assert() {}
+	private Assert() {
+	}
 
 	public static <T> T requireNonNull(@Nullable T item, String message) {
 

@@ -67,13 +67,13 @@ public abstract class AbstractMongoSessionConverterTest {
 
 		// then
 		assertThat(deserialized).isEqualToComparingOnlyGivenFields(toSerialize, "id", "createdMillis", "accessedMillis",
-				"intervalSeconds", "expireAt");
+	"intervalSeconds", "expireAt");
 
 		SecurityContextImpl springSecurityContextBefore = toSerialize.getAttribute("SPRING_SECURITY_CONTEXT");
 		SecurityContextImpl springSecurityContextAfter = deserialized.getAttribute("SPRING_SECURITY_CONTEXT");
 
 		assertThat(springSecurityContextBefore).isEqualToComparingOnlyGivenFields(springSecurityContextAfter,
-				"authentication.principal", "authentication.authorities", "authentication.authenticated");
+	"authentication.principal", "authentication.authorities", "authentication.authenticated");
 		assertThat(springSecurityContextAfter.getAuthentication().getPrincipal()).isEqualTo("john_the_springer");
 		assertThat(springSecurityContextAfter.getAuthentication().getCredentials()).isNull();
 	}
@@ -129,13 +129,13 @@ public abstract class AbstractMongoSessionConverterTest {
 	@Nullable
 	MongoSession convertToSession(DBObject session) {
 		return (MongoSession) getMongoSessionConverter().convert(session, TypeDescriptor.valueOf(DBObject.class),
-				TypeDescriptor.valueOf(MongoSession.class));
+	TypeDescriptor.valueOf(MongoSession.class));
 	}
 
 	@Nullable
 	DBObject convertToDBObject(MongoSession session) {
 		return (DBObject) getMongoSessionConverter().convert(session, TypeDescriptor.valueOf(MongoSession.class),
-				TypeDescriptor.valueOf(DBObject.class));
+	TypeDescriptor.valueOf(DBObject.class));
 	}
 
 }

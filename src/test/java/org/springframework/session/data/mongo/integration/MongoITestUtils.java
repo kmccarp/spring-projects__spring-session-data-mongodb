@@ -32,7 +32,8 @@ import de.flapdoodle.embed.process.runtime.Network;
  */
 final class MongoITestUtils {
 
-	private MongoITestUtils() {}
+	private MongoITestUtils() {
+	}
 
 	/**
 	 * Creates {@link MongodExecutable} for use in integration tests.
@@ -44,7 +45,7 @@ final class MongoITestUtils {
 	static MongodExecutable embeddedMongoServer(int port) throws IOException {
 
 		IMongodConfig mongodConfig = new MongodConfigBuilder().version(Version.Main.PRODUCTION)
-				.net(new Net(port, Network.localhostIsIPv6())).build();
+	.net(new Net(port, Network.localhostIsIPv6())).build();
 
 		MongodStarter mongodStarter = MongodStarter.getDefaultInstance();
 

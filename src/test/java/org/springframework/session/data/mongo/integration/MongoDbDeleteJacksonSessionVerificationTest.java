@@ -61,7 +61,8 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @ContextConfiguration
 public class MongoDbDeleteJacksonSessionVerificationTest {
 
-	@Autowired ApplicationContext ctx;
+	@Autowired
+	ApplicationContext ctx;
 
 	WebTestClient client;
 
@@ -76,12 +77,12 @@ public class MongoDbDeleteJacksonSessionVerificationTest {
 		// 1. Login and capture the SESSION cookie value.
 
 		FluxExchangeResult<String> loginResult = this.client.post().uri("/login")
-				.contentType(MediaType.APPLICATION_FORM_URLENCODED) //
-				.body(BodyInserters //
-						.fromFormData("username", "admin") //
-						.with("password", "password")) //
-				.exchange() //
-				.returnResult(String.class);
+	.contentType(MediaType.APPLICATION_FORM_URLENCODED) //
+	.body(BodyInserters //
+.fromFormData("username", "admin") //
+.with("password", "password")) //
+	.exchange() //
+	.returnResult(String.class);
 
 		assertThat(loginResult.getResponseHeaders().getLocation()).isEqualTo(URI.create("/"));
 
@@ -90,40 +91,40 @@ public class MongoDbDeleteJacksonSessionVerificationTest {
 		// 2. Fetch a protected resource using the SESSION cookie.
 
 		this.client.get().uri("/hello") //
-				.cookie("SESSION", originalSessionId) //
-				.exchange() //
-				.expectStatus().isOk() //
-				.returnResult(String.class).getResponseBody() //
-				.as(StepVerifier::create) //
-				.expectNext("HelloWorld") //
-				.verifyComplete();
+	.cookie("SESSION", originalSessionId) //
+	.exchange() //
+	.expectStatus().isOk() //
+	.returnResult(String.class).getResponseBody() //
+	.as(StepVerifier::create) //
+	.expectNext("HelloWorld") //
+	.verifyComplete();
 
 		// 3. Logout using the SESSION cookie, and capture the new SESSION cookie.
 
 		String newSessionId = this.client.post().uri("/logout") //
-				.cookie("SESSION", originalSessionId) //
-				.exchange() //
-				.expectStatus().isFound() //
-				.returnResult(String.class)
-				.getResponseCookies().getFirst("SESSION").getValue();
+	.cookie("SESSION", originalSessionId) //
+	.exchange() //
+	.expectStatus().isFound() //
+	.returnResult(String.class)
+	.getResponseCookies().getFirst("SESSION").getValue();
 
 		assertThat(newSessionId).isNotEqualTo(originalSessionId);
 
 		// 4. Verify the new SESSION cookie is not yet authorized.
 
 		this.client.get().uri("/hello") //
-				.cookie("SESSION", newSessionId) //
-				.exchange() //
-				.expectStatus().isFound() //
-				.expectHeader().value(HttpHeaders.LOCATION, value -> assertThat(value).isEqualTo("/login"));
+	.cookie("SESSION", newSessionId) //
+	.exchange() //
+	.expectStatus().isFound() //
+	.expectHeader().value(HttpHeaders.LOCATION, value -> assertThat(value).isEqualTo("/login"));
 
 		// 5. Verify the original SESSION cookie no longer works.
 
 		this.client.get().uri("/hello") //
-				.cookie("SESSION", originalSessionId) //
-				.exchange() //
-				.expectStatus().isFound() //
-				.expectHeader().value(HttpHeaders.LOCATION, value -> assertThat(value).isEqualTo("/login"));
+	.cookie("SESSION", originalSessionId) //
+	.exchange() //
+	.expectStatus().isFound() //
+	.expectHeader().value(HttpHeaders.LOCATION, value -> assertThat(value).isEqualTo("/login"));
 	}
 
 	@RestController
@@ -141,24 +142,24 @@ public class MongoDbDeleteJacksonSessionVerificationTest {
 		@Bean
 		public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
 			return http //
-					.logout()//
+		.logout()//
 					/**/.and() //
-					.formLogin() //
+		.formLogin() //
 					/**/.and() //
-					.csrf().disable() //
-					.authorizeExchange() //
-					.anyExchange().authenticated() //
+		.csrf().disable() //
+		.authorizeExchange() //
+		.anyExchange().authenticated() //
 					/**/.and() //
-					.build();
+		.build();
 		}
 
 		@Bean
 		public MapReactiveUserDetailsService userDetailsService() {
 			return new MapReactiveUserDetailsService(User.withDefaultPasswordEncoder() //
-					.username("admin") //
-					.password("password") //
-					.roles("USER,ADMIN") //
-					.build());
+		.username("admin") //
+		.password("password") //
+		.roles("USER,ADMIN") //
+		.build());
 		}
 
 		@Bean

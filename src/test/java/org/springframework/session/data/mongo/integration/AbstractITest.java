@@ -40,7 +40,8 @@ public abstract class AbstractITest {
 
 	protected SecurityContext changedContext;
 
-	@Autowired(required = false) protected SessionEventRegistry registry;
+	@Autowired(required = false)
+	protected SessionEventRegistry registry;
 
 	@BeforeEach
 	public void setup() {
@@ -51,11 +52,11 @@ public abstract class AbstractITest {
 
 		this.context = SecurityContextHolder.createEmptyContext();
 		this.context.setAuthentication(new UsernamePasswordAuthenticationToken("username-" + UUID.randomUUID(), "na",
-				AuthorityUtils.createAuthorityList("ROLE_USER")));
+	AuthorityUtils.createAuthorityList("ROLE_USER")));
 
 		this.changedContext = SecurityContextHolder.createEmptyContext();
 		this.changedContext.setAuthentication(new UsernamePasswordAuthenticationToken("changedContext-" + UUID.randomUUID(),
-				"na", AuthorityUtils.createAuthorityList("ROLE_USER")));
+	"na", AuthorityUtils.createAuthorityList("ROLE_USER")));
 	}
 
 }

@@ -30,14 +30,14 @@ public final class MongoSessionUtils {
 	static DBObject convertToDBObject(AbstractMongoSessionConverter mongoSessionConverter, MongoSession session) {
 
 		return (DBObject) mongoSessionConverter.convert(session, TypeDescriptor.valueOf(MongoSession.class),
-				TypeDescriptor.valueOf(DBObject.class));
+	TypeDescriptor.valueOf(DBObject.class));
 	}
 
 	@Nullable
 	static MongoSession convertToSession(AbstractMongoSessionConverter mongoSessionConverter, Document session) {
 
 		return (MongoSession) mongoSessionConverter.convert(session, TypeDescriptor.valueOf(Document.class),
-				TypeDescriptor.valueOf(MongoSession.class));
+	TypeDescriptor.valueOf(MongoSession.class));
 	}
 
 }

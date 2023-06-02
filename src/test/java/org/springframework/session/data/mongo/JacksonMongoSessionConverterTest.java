@@ -117,7 +117,7 @@ public class JacksonMongoSessionConverterTest extends AbstractMongoSessionConver
 		data.put("expireAt", now);
 		data.put("@class", MongoSession.class.getName());
 		data.put("_id", new ObjectId().toString());
-		
+
 		Document document = new Document(data);
 
 		// when

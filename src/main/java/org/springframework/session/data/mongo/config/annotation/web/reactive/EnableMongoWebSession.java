@@ -48,7 +48,7 @@ import org.springframework.session.data.mongo.ReactiveMongoSessionRepository;
  * @since 2.0
  */
 @Retention(java.lang.annotation.RetentionPolicy.RUNTIME)
-@Target({ java.lang.annotation.ElementType.TYPE })
+@Target({java.lang.annotation.ElementType.TYPE})
 @Documented
 @Import(ReactiveMongoWebSessionConfiguration.class)
 @Configuration(proxyBeanMethods = false)

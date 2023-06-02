@@ -43,8 +43,7 @@ import org.springframework.session.events.SessionDeletedEvent;
  * @author Greg Turnquist
  * @since 2.2.0
  */
-public class ReactiveMongoSessionRepository
-		implements ReactiveSessionRepository<MongoSession>, ApplicationEventPublisherAware, InitializingBean {
+public class ReactiveMongoSessionRepositoryimplements ReactiveSessionRepository<MongoSession>, ApplicationEventPublisherAware, InitializingBean {
 
 	/**
 	 * The default time period in seconds in which a session will expire.
@@ -63,7 +62,7 @@ public class ReactiveMongoSessionRepository
 	private Integer maxInactiveIntervalInSeconds = DEFAULT_INACTIVE_INTERVAL;
 	private String collectionName = DEFAULT_COLLECTION_NAME;
 	private AbstractMongoSessionConverter mongoSessionConverter = new JdkMongoSessionConverter(
-			Duration.ofSeconds(this.maxInactiveIntervalInSeconds));
+Duration.ofSeconds(this.maxInactiveIntervalInSeconds));
 	private MongoOperations blockingMongoOperations;
 	private ApplicationEventPublisher eventPublisher;
 
@@ -85,48 +84,48 @@ public class ReactiveMongoSessionRepository
 	public Mono<MongoSession> createSession() {
 
 		return Mono.justOrEmpty(this.maxInactiveIntervalInSeconds) //
-				.map(MongoSession::new) //
-				.doOnNext(mongoSession -> publishEvent(new SessionCreatedEvent(this, mongoSession))) //
-				.switchIfEmpty(Mono.just(new MongoSession()));
+	.map(MongoSession::new) //
+	.doOnNext(mongoSession -> publishEvent(new SessionCreatedEvent(this, mongoSession))) //
+	.switchIfEmpty(Mono.just(new MongoSession()));
 	}
 
 	@Override
 	public Mono<Void> save(MongoSession session) {
 
 		return Mono //
-				.justOrEmpty(convertToDBObject(this.mongoSessionConverter, session)) //
-				.flatMap(dbObject -> {
-					if (session.hasChangedSessionId()) {
+	.justOrEmpty(convertToDBObject(this.mongoSessionConverter, session)) //
+	.flatMap(dbObject -> {
+		if (session.hasChangedSessionId()) {
 
-						return this.mongoOperations
-								.remove(query(where("_id").is(session.getOriginalSessionId())), this.collectionName) //
-								.then(this.mongoOperations.save(dbObject, this.collectionName));
-					} else {
+			return this.mongoOperations
+		.remove(query(where("_id").is(session.getOriginalSessionId())), this.collectionName) //
+		.then(this.mongoOperations.save(dbObject, this.collectionName));
+		} else {
 
-						return this.mongoOperations.save(dbObject, this.collectionName);
-					}
-				}) //
-				.then();
+			return this.mongoOperations.save(dbObject, this.collectionName);
+		}
+	}) //
+	.then();
 	}
 
 	@Override
 	public Mono<MongoSession> findById(String id) {
 
 		return findSession(id) //
-				.map(document -> convertToSession(this.mongoSessionConverter, document)) //
-				.filter(mongoSession -> !mongoSession.isExpired()) //
-				.switchIfEmpty(Mono.defer(() -> this.deleteById(id).then(Mono.empty())));
+	.map(document -> convertToSession(this.mongoSessionConverter, document)) //
+	.filter(mongoSession -> !mongoSession.isExpired()) //
+	.switchIfEmpty(Mono.defer(() -> this.deleteById(id).then(Mono.empty())));
 	}
 
 	@Override
 	public Mono<Void> deleteById(String id) {
 
 		return findSession(id) //
-				.flatMap(document -> this.mongoOperations.remove(document, this.collectionName) //
-						.then(Mono.just(document))) //
-				.map(document -> convertToSession(this.mongoSessionConverter, document)) //
-				.doOnNext(mongoSession -> publishEvent(new SessionDeletedEvent(this, mongoSession))) //
-				.then();
+	.flatMap(document -> this.mongoOperations.remove(document, this.collectionName) //
+.then(Mono.just(document))) //
+	.map(document -> convertToSession(this.mongoSessionConverter, document)) //
+	.doOnNext(mongoSession -> publishEvent(new SessionDeletedEvent(this, mongoSession))) //
+	.then();
 	}
 
 	/**

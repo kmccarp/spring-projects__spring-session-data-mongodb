@@ -29,5 +29,6 @@ public class TraditionalConfigurationTest extends AbstractClassLoaderTest<MongoI
 
 	@Configuration
 	@EnableMongoHttpSession
-	static class Config extends BaseConfig {}
+	static class Config extends BaseConfig {
+	}
 }
