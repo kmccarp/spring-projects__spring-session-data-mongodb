@@ -24,8 +24,8 @@ import org.springframework.session.events.AbstractSessionEvent;
 
 public class SessionEventRegistry implements ApplicationListener<AbstractSessionEvent> {
 
-	private Map<String, AbstractSessionEvent> events = new HashMap<>();
-	private Map<String, Object> locks = new HashMap<>();
+	private final Map<String, AbstractSessionEvent> events = new HashMap<>();
+	private final Map<String, Object> locks = new HashMap<>();
 
 	public void onApplicationEvent(AbstractSessionEvent event) {
 
