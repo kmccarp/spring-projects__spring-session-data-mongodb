@@ -150,8 +150,8 @@ public class JdkMongoSessionConverter extends AbstractMongoSessionConverter {
 
 		Object sessionAttributes = sessionWrapper.get(ATTRIBUTES);
 
-		byte[] attributesBytes = (sessionAttributes instanceof Binary ? ((Binary) sessionAttributes).getData()
-				: (byte[]) sessionAttributes);
+		byte[] attributesBytes = sessionAttributes instanceof Binary ? ((Binary) sessionAttributes).getData()
+				: (byte[]) sessionAttributes;
 
 		Map<String, Object> attributes = (Map<String, Object>) this.deserializer.convert(attributesBytes);
 
