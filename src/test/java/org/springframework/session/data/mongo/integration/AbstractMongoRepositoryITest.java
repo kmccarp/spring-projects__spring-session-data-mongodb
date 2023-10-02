@@ -51,7 +51,7 @@ import com.mongodb.client.MongoClients;
  * @author Vedran Pavic
  * @author Greg Turnquist
  */
-abstract public class AbstractMongoRepositoryITest extends AbstractITest {
+public abstract class AbstractMongoRepositoryITest extends AbstractITest {
 
 	protected static final String SPRING_SECURITY_CONTEXT = "SPRING_SECURITY_CONTEXT";
 
