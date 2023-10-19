@@ -107,7 +107,7 @@ public class JdkMongoSessionConverter extends AbstractMongoSessionConverter {
 
 		Object maxInterval = sessionWrapper.getOrDefault(MAX_INTERVAL, this.maxInactiveInterval);
 
-		Duration maxIntervalDuration = (maxInterval instanceof Duration) ? (Duration) maxInterval
+		Duration maxIntervalDuration = maxInterval instanceof Duration ? (Duration) maxInterval
 				: Duration.parse(maxInterval.toString());
 
 		MongoSession session = new MongoSession(sessionWrapper.getString(ID), maxIntervalDuration.getSeconds());
@@ -150,8 +150,8 @@ public class JdkMongoSessionConverter extends AbstractMongoSessionConverter {
 
 		Object sessionAttributes = sessionWrapper.get(ATTRIBUTES);
 
-		byte[] attributesBytes = (sessionAttributes instanceof Binary ? ((Binary) sessionAttributes).getData()
-				: (byte[]) sessionAttributes);
+		byte[] attributesBytes = sessionAttributes instanceof Binary ? ((Binary) sessionAttributes).getData()
+				: (byte[]) sessionAttributes;
 
 		Map<String, Object> attributes = (Map<String, Object>) this.deserializer.convert(attributesBytes);
 
